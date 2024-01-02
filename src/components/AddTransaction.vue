@@ -12,13 +12,15 @@
 			>
 			<input type="text" id="amount" placeholder="Enter amount..." v-model="amount" />
 		</div>
-		<button class="btn">Add transaction</button>
+		<button :disabled="!isFullFilled" :class="{ 'btn-disabled': !isFullFilled }" class="btn">
+			Add transaction
+		</button>
 	</form>
 </template>
 
 <script setup>
 	import { useToast } from 'vue-toastification';
-	import { ref } from 'vue';
+	import { ref, computed } from 'vue';
 
 	const text = ref('');
 	const amount = ref('');
@@ -28,10 +30,26 @@
 
 	const emit = defineEmits(['transactionSubmitted']);
 
+	let isFullFilled = computed(() => {
+		return text.value && amount.value;
+	});
+
 	const onSubmit = () => {
 		if (!text.value || !amount.value) {
 			// Display a toast error message if either field is empty
 			toast.error('Both fields must be filled.');
+			return;
+		}
+		if (!amount.value.isNumber) {
+			toast.info('Amount must be a number.', {
+				position: 'top-right',
+				timeout: 5000,
+				closeOnClick: true,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				draggablePercent: 0.6,
+				closeButton: 'button',
+			});
 			return;
 		}
 

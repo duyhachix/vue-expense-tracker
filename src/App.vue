@@ -15,7 +15,10 @@
 			<AddTransaction @transactionSubmitted="handleTransactionSubmitted" />
 		</div>
 	</div>
-	<div v-else class="container expense-graph"></div>
+	<div v-else class="container expense-graph">
+		<IncomeExpenses :income="+income" :expenses="+expenses" />
+		<Graph :income="+income" :expenses="+expenses"></Graph>
+	</div>
 </template>
 
 <script setup>
@@ -24,6 +27,7 @@
 	import IncomeExpenses from './components/IncomeExpenses.vue';
 	import TransactionList from './components/TransactionList.vue';
 	import AddTransaction from './components/AddTransaction.vue';
+	import Graph from './components/Graph.vue';
 
 	import { ref, computed, onMounted } from 'vue';
 

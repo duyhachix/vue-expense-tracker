@@ -40,7 +40,13 @@
 			toast.error('Both fields must be filled.');
 			return;
 		}
-		if (!amount.value.isNumber) {
+
+		const transactionData = {
+			text: text.value,
+			amount: parseFloat(amount.value),
+		};
+
+		if (!transactionData['amount']) {
 			toast.info('Amount must be a number.', {
 				position: 'top-right',
 				timeout: 5000,
@@ -52,11 +58,6 @@
 			});
 			return;
 		}
-
-		const transactionData = {
-			text: text.value,
-			amount: parseFloat(amount.value),
-		};
 
 		emit('transactionSubmitted', transactionData);
 

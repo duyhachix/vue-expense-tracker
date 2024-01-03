@@ -80,7 +80,7 @@
 
 	// Submit transaction
 	const handleTransactionSubmitted = (transactionData) => {
-		transactions.value.push({
+		transactions.value.unshift({
 			id: generateUniqueId(),
 			text: transactionData.text,
 			amount: transactionData.amount,
